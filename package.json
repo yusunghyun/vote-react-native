@@ -1,0 +1,53 @@
+{
+  "name": "vote_react_native",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "1.13.2",
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/native": "5.8.10",
+    "install": "0.13.0",
+    "npm": "6.14.9",
+    "react": "16.13.1",
+    "react-native": "0.63.4",
+    "react-native-fast-image": "8.3.4",
+    "react-native-gesture-handler": "1.9.0",
+    "react-native-modal": "11.5.6",
+    "react-native-reanimated": "1.13.2",
+    "react-native-safe-area-context": "3.1.9",
+    "react-native-screens": "2.16.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/runtime": "^7.12.1",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/node": "14.14.6",
+    "@types/react": "16.9.55",
+    "@types/react-native": "0.63.30",
+    "@types/react-native-svg-charts": "5.0.6",
+    "@types/react-navigation": "3.4.0",
+    "@typescript-eslint/eslint-plugin": "4.8.1",
+    "@typescript-eslint/parser": "4.8.1",
+    "babel-jest": "^26.6.1",
+    "eslint": "7.12.1",
+    "eslint-config-prettier": "6.15.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-react": "7.21.5",
+    "jest": "^26.6.1",
+    "metro-react-native-babel-preset": "^0.63.0",
+    "prettier": "2.1.2",
+    "prettier-airbnb-config": "1.0.0",
+    "react-test-renderer": "16.13.1",
+    "typescript": "4.0.5"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
