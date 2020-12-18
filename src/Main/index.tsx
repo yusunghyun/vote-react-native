@@ -2,8 +2,11 @@ import React, {useState} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import styles from './style';
 import scale from '../../Common/scale';
+import {StackNavigationProp} from '@react-navigation/stack';
+
 interface Props {
-  name: string;
+  route: {params: {name: string}};
+  navigation: StackNavigationProp<{}>;
 }
 interface DataType {
   title: string;
@@ -62,7 +65,12 @@ export default function index(props: Props) {
               data={data}
               keyExtractor={(item, index) => index + 'm'}
               renderItem={({item, index}) => (
-                <TouchableOpacity style={{...styles.vote_container}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('Detail');
+                    // props.navigation.navigate('Result');
+                  }}
+                  style={{...styles.vote_container}}>
                   <View style={{...styles.vote_row}}>
                     <Text style={{...styles.vote_txt}}>{item.title}</Text>
                     {true ? (
@@ -79,7 +87,11 @@ export default function index(props: Props) {
           </View>
         </View>
 
-        <TouchableOpacity style={{...styles.create_container}}>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('Create');
+          }}
+          style={{...styles.create_container}}>
           <Text style={{...styles.create_txt}}>투표 만들기</Text>
         </TouchableOpacity>
       </View>

@@ -20,35 +20,35 @@ const Route = (props: any) => {
           name="Auth"
           component={Auth}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid,
           }}
         />
         <Stack.Screen
           name="Main"
           component={Main}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid,
           }}
         />
         <Stack.Screen
           name="Create"
           component={Create}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid,
           }}
         />
         <Stack.Screen
           name="Result"
           component={Result}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid,
           }}
         />
         <Stack.Screen
           name="Detail"
           component={Detail}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid,
           }}
         />
       </Stack.Navigator>

@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
     color: '#AE5E1A',
     alignSelf: 'center',
     fontSize: scale(18),
-    marginBottom:scale(10), 
+    marginBottom: scale(10),
   },
   container2: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'center'
+    justifyContent: 'center',
   },
   input: {
     borderWidth: 1,
@@ -25,8 +25,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFDAB9',
     borderRadius: scale(14),
     paddingLeft: scale(10),
-    fontSize:scale(14),
-    color:'#000000' 
+    fontSize: scale(14),
+    color: '#000000',
+    elevation: 5,
   },
   touch_container: {
     backgroundColor: '#AE5E1A',
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: scale(10),
+    elevation: 5,
   },
   touch_txt: {
     fontSize: scale(14),
