@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 const Route = (props: any) => {
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode={'none'} initialRouteName="Main">
+      <Stack.Navigator headerMode={'none'} initialRouteName="Auth">
         <Stack.Screen
           name="Auth"
           component={Auth}
