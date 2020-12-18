@@ -8,13 +8,21 @@ import Main from './Main';
 import Create from './Create';
 import Detail from './Detail';
 import Result from './Result';
+import Auth from './Auth';
 
 const Stack = createStackNavigator();
 
 const Route = (props: any) => {
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode={'none'} initialRouteName="LoadingPage">
+      <Stack.Navigator headerMode={'none'} initialRouteName="Main">
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+          }}
+        />
         <Stack.Screen
           name="Main"
           component={Main}

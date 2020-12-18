@@ -1,16 +1,88 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-
+import React, {useState} from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import styles from './style';
+import scale from '../../Common/scale';
 interface Props {
   name: string;
 }
-
-export default function index(props: Props) {
-  return (
-    <View>
-      <Text>ㅎㅇㅎㅇㅎㅇ</Text>
-    </View>
-  );
+interface DataType {
+  title: string;
+  key: number;
+  terms: number[];
+  host: string;
 }
 
-const styles = StyleSheet.create({});
+export default function index(props: Props) {
+  const [data, set_data] = useState<Array<DataType>>([
+    {
+      title: '첫번째 투표',
+      key: 0,
+      terms: [Date.now(), Date.now()],
+      host: '유성현',
+    },
+    {
+      title: '두번째 투표',
+      key: 1,
+      terms: [Date.now(), Date.now()],
+      host: '유성현',
+    },
+    {
+      title: '세번째 투표',
+      key: 2,
+      terms: [Date.now(), Date.now()],
+      host: '유성현',
+    },
+    {
+      title: '세번째 투표',
+      key: 3,
+      terms: [Date.now(), Date.now()],
+      host: '유성현',
+    },
+    {
+      title: '네번째 투표',
+      key: 4,
+      terms: [Date.now(), Date.now()],
+      host: '유성현',
+    },
+    {
+      title: '다섯번째 투표',
+      key: 5,
+      terms: [Date.now(), Date.now()],
+      host: '유성현',
+    },
+  ]);
+
+  return (
+    <>
+      <View style={{...styles.container}}>
+        <View style={{...styles.container}}>
+          <Text style={{...styles.title}}>VOTE</Text>
+          <View style={{...styles.flat_container}}>
+            <FlatList
+              data={data}
+              keyExtractor={(item, index) => index + 'm'}
+              renderItem={({item, index}) => (
+                <TouchableOpacity style={{...styles.vote_container}}>
+                  <View style={{...styles.vote_row}}>
+                    <Text style={{...styles.vote_txt}}>{item.title}</Text>
+                    {true ? (
+                      <Text style={{...styles.vote_txt}}>진행중</Text>
+                    ) : (
+                      <Text style={{...styles.vote_txt}}>종료</Text>
+                    )}
+                  </View>
+                  <Text style={{...styles.vote_sub_txt}}>{item.host}</Text>
+                  <Text style={{...styles.vote_sub_txt}}>{item.terms[0]}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        </View>
+
+        <TouchableOpacity style={{...styles.create_container}}>
+          <Text style={{...styles.create_txt}}>투표 만들기</Text>
+        </TouchableOpacity>
+      </View>
+    </>
+  );
+}
