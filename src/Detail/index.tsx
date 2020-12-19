@@ -9,7 +9,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 interface Props {
   route: {
-    params: DataType;
+    params: {data: DataType; name: string};
   };
   navigation: StackNavigationProp<{}>;
 }
@@ -18,17 +18,17 @@ export default function index(props: Props) {
   const {route} = props;
   const {params} = route;
   const [data, set_data] = useState<DataType>({
-    ...params,
-    item: params.item.map((v) => {
+    ...params.data,
+    item: params.data.item.map((v) => {
       return {...v, isCheck: false};
     }),
   });
 
-  // useEffect(() => {
-  //   props.navigation.addListener('focus', async () => {
-  //     set_data(props.route.params)
-  //   });
-  // }, [props.navigation]);
+  useEffect(() => {
+    props.navigation.addListener('focus', async () => {
+      console.log('data : ',data)
+    });
+  }, [props.navigation]);
 
   return (
     <View style={{...styles.container2}}>
@@ -42,17 +42,26 @@ export default function index(props: Props) {
               <TouchableOpacity
                 onPress={() => {
                   let tmp = {...data};
-                  tmp.item[index].isCheck = !tmp.item[index].isCheck;
+                  if(tmp.item[index].isCheck){
+                    tmp.item[index].vote = tmp.item[index].vote -1
+                    tmp.item[index].isCheck = false
+                  }else{
+                    tmp.item[index].vote = tmp.item[index].vote +1
+                    tmp.item[index].isCheck = true
+                  }
                   set_data(tmp);
                 }}
                 style={
-                  item.isCheck
-                    ? {...styles.input_check}
-                    : {...styles.input}
+                  item.isCheck ? {...styles.input_check} : {...styles.input}
                 }>
-                <Text style={item.isCheck
-                    ? {...styles.plust_text_check}
-                    : {...styles.plust_text}}>{item.name}</Text>
+                <Text
+                  style={
+                    item.isCheck
+                      ? {...styles.plust_text_check}
+                      : {...styles.plust_text}
+                  }>
+                  {item.name}
+                </Text>
               </TouchableOpacity>
               {index === data?.item.length - 1 ? (
                 <View style={{flexDirection: 'row'}}>
@@ -78,7 +87,19 @@ export default function index(props: Props) {
           <Text style={{...styles.create_txt}}>뒤로 가기!</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={async () => {}}
+          onPress={async () => {
+            console.log('data : ', data);
+            const legacy = (await AsyncStorage.getItem('data'))
+            if(legacy) await AsyncStorage.setItem('data',JSON.stringify(JSON.parse(legacy).map((v,i)=>{
+              if(v.key===data.key){
+                return {...v,item:data.item}
+              }else{
+                return v
+              }
+            })))
+            props.navigation.goBack();
+
+          }}
           style={{...styles.create_container2}}>
           <Text style={{...styles.create_txt2}}>투표 하기!</Text>
         </TouchableOpacity>
