@@ -19,7 +19,6 @@ export default function index(props: Props) {
     props.navigation.addListener('focus', async () => {
       const result = await AsyncStorage.getItem('data');
       if (result !== null) {
-        console.log('result : ', JSON.parse(result)[0].item);
         set_data(JSON.parse(result));
       }
     });
