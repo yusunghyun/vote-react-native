@@ -4,6 +4,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ToastAndroid,
   TextInput,
   ScrollView,
 } from 'react-native';
@@ -44,13 +45,13 @@ export default function index(props: Props) {
 
   const [date, set_date] = useState<Date | number>(Date.now());
   const [date_modal, set_date_modal] = useState<boolean>(false);
-  const [time, set_time] = useState<Date | number>();
+  const [time, set_time] = useState<Date | number>(Date.now());
   const [time_modal, set_time_modal] = useState<boolean>(false);
 
   return (
     <>
       <View style={{...styles.container}}>
-        <View style={{...styles.container2}}>
+        <View style={{...styles.container}}>
           <ScrollView>
             <Text style={{...styles.title}}>투표 만들기</Text>
             <TextInput
@@ -92,19 +93,21 @@ export default function index(props: Props) {
               </TouchableOpacity>
             ) : null}
             <View style={{flexDirection: 'row'}}>
-              <Text style={{...styles.term_text}}>마감 기간</Text>
+              <Text style={{...styles.term_text, marginLeft: scale(20)}}>
+                마감 기간
+              </Text>
               <TouchableOpacity
                 onPress={() => {
                   set_date_modal(true);
                 }}
-                style={{...styles.input, marginRight: scale(5)}}>
+                style={{...styles.input, marginRight: 0}}>
                 <Text>{dayjs(date).format('YYYY-MM-DD')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   set_time_modal(true);
                 }}
-                style={{...styles.input}}>
+                style={{...styles.input, marginLeft: scale(5)}}>
                 <Text>{dayjs(time).format('hh:mm a')}</Text>
               </TouchableOpacity>
             </View>
@@ -120,45 +123,52 @@ export default function index(props: Props) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={async () => {
-              // await AsyncStorage.clear();
-              const tmp = await AsyncStorage.getItem('data');
-              if (tmp) {
-                await AsyncStorage.setItem(
-                  'data',
-                  JSON.stringify([
-                    ...tmp,
-                    {
-                      ...form,
-                      terms:
-                        dayjs(
-                          dayjs(date).format('YYYY-MM-DD') +
-                            ' ' +
-                            dayjs(time).format('HH:mm'),
-                        ).unix() * 1000,
-                      host: props.route.params.name,
-                      key: `${tmp.length}`,
-                    },
-                  ]),
-                );
-              } else {
-                await AsyncStorage.setItem(
-                  'data',
-                  JSON.stringify([
-                    {
-                      ...form,
-                      terms:
-                        dayjs(
-                          dayjs(date).format('YYYY-MM-DD') +
-                            ' ' +
-                            dayjs(time).format('HH:mm'),
-                        ).unix() * 1000,
-                      host: props.route.params.name,
-                      key: '0',
-                    },
-                  ]),
+              if (form.title && form.item.some((v) => v.name)) {
+                const tmp = await AsyncStorage.getItem('data');
+                if (tmp) {
+                  await AsyncStorage.setItem(
+                    'data',
+                    JSON.stringify([
+                      ...JSON.parse(tmp),
+                      {
+                        ...form,
+                        terms:
+                          dayjs(
+                            dayjs(date).format('YYYY-MM-DD') +
+                              ' ' +
+                              dayjs(time).format('HH:mm'),
+                          ).unix() * 1000,
+                        host: props.route.params.name,
+                        key: `${tmp.length}`,
+                      },
+                    ]),
+                  );
+                } else {
+                  await AsyncStorage.setItem(
+                    'data',
+                    JSON.stringify([
+                      {
+                        ...form,
+                        terms:
+                          dayjs(
+                            dayjs(date).format('YYYY-MM-DD') +
+                              ' ' +
+                              dayjs(time).format('HH:mm'),
+                          ).unix() * 1000,
+                        host: props.route.params.name,
+                        key: '0',
+                      },
+                    ]),
+                  );
+                }
+                props.navigation.goBack();
+              }else{
+                ToastAndroid.showWithGravity(
+                  '모두 입력해 주세요!',
+                  ToastAndroid.SHORT,
+                  ToastAndroid.CENTER,
                 );
               }
-              props.navigation.goBack();
             }}
             style={{...styles.create_container2}}>
             <Text style={{...styles.create_txt2}}>완료</Text>

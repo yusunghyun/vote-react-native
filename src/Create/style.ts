@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     marginBottom: scale(10),
     elevation: 5,
+    marginHorizontal:scale(20), 
   },
   flat_container: {
     height: '85%',
