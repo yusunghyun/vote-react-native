@@ -8,5 +8,6 @@ export type DataType = {
   item: Array<{
     name: string;
     vote: number;
+    isCheck?: boolean;
   }>;
 };
