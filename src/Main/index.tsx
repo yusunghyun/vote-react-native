@@ -39,9 +39,9 @@ export default function index(props: Props) {
                   <TouchableOpacity
                     onPress={() => {
                       if (item.terms > now_time) {
-                        props.navigation.navigate('Detail', item);
+                        props.navigation.navigate('Detail', {data:item,name:props.route.params.name});
                       } else {
-                        props.navigation.navigate('Result', item);
+                        props.navigation.navigate('Result', {data:item,name:props.route.params.name});
                       }
                     }}
                     style={{...styles.vote_container}}>
