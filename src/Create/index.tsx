@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -25,15 +25,15 @@ export default function index(props: Props) {
     title: '',
     item: [
       {
-        name: '첫번째 항목',
+        name: '',
         vote: 0,
       },
       {
-        name: '두번째 항목',
+        name: '',
         vote: 0,
       },
       {
-        name: '세번째 항목',
+        name: '',
         vote: 0,
       },
     ],
@@ -46,6 +46,10 @@ export default function index(props: Props) {
   const [date_modal, set_date_modal] = useState<boolean>(false);
   const [time, set_time] = useState<Date | number>();
   const [time_modal, set_time_modal] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log('fd : ', form.item);
+  }, [form]);
 
   return (
     <>
@@ -65,7 +69,13 @@ export default function index(props: Props) {
               <TextInput
                 key={i + 'ci'}
                 style={{...styles.input}}
-                placeholder={`${v.name}`}
+                placeholder={`${i+1}번째 항목`}
+                value={form.item[i].name} //아 벨류가 필수네 걍 뻇더니 한글자에서 끝남 ㅇㅅㅇ
+                onChangeText={(text) => {
+                  let tmp = {...form};
+                  tmp.item[i].name = text;
+                  set_form(tmp);
+                }}
               />
             ))}
             {form?.item.length < 5 ? (
@@ -74,7 +84,7 @@ export default function index(props: Props) {
                   set_form({
                     ...form,
                     item: [...form.item].concat({
-                      name: '추가된 항목',
+                      name: ``,
                       vote: 0,
                     }),
                   });
