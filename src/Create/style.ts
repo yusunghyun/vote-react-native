@@ -22,6 +22,16 @@ const styles = StyleSheet.create({
     margin: scale(20),
     color: '#AE5E1A',
   },
+  plust_text:{
+    fontSize:scale(14), 
+    color:'rgba(0,0,0,0.4)',
+    marginVertical:scale(10), 
+  },
+  term_text:{
+    flex:1,
+    fontSize:scale(14), 
+    color:'#AE5E1A'
+  },
   input: {
     borderWidth: 1,
     borderColor: '#FFC091',

@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import styles from './style';
 import scale from '../../Common/scale';
 import {StackNavigationProp} from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props {
   route: {params: {name: string}};
@@ -11,7 +12,7 @@ interface Props {
 interface DataType {
   title: string;
   key: number;
-  terms: number[];
+  terms: number;
   host: string;
 }
 
@@ -20,40 +21,47 @@ export default function index(props: Props) {
     {
       title: '첫번째 투표',
       key: 0,
-      terms: [Date.now(), Date.now()],
+      terms: Date.now(),
       host: '유성현',
     },
     {
       title: '두번째 투표',
       key: 1,
-      terms: [Date.now(), Date.now()],
+      terms: Date.now(),
       host: '유성현',
     },
     {
       title: '세번째 투표',
       key: 2,
-      terms: [Date.now(), Date.now()],
+      terms: Date.now(),
       host: '유성현',
     },
     {
       title: '세번째 투표',
       key: 3,
-      terms: [Date.now(), Date.now()],
+      terms: Date.now(),
       host: '유성현',
     },
     {
       title: '네번째 투표',
       key: 4,
-      terms: [Date.now(), Date.now()],
+      terms: Date.now(),
       host: '유성현',
     },
     {
       title: '다섯번째 투표',
       key: 5,
-      terms: [Date.now(), Date.now()],
+      terms: Date.now(),
       host: '유성현',
     },
   ]);
+
+  useEffect(() => {
+		props.navigation.addListener('focus', async () => {
+      const result = await AsyncStorage.getItem('data')
+      console.log('result : ',result)
+		});
+	}, [props.navigation]);
 
   return (
     <>
@@ -80,7 +88,7 @@ export default function index(props: Props) {
                     )}
                   </View>
                   <Text style={{...styles.vote_sub_txt}}>{item.host}</Text>
-                  <Text style={{...styles.vote_sub_txt}}>{item.terms[0]}</Text>
+                  <Text style={{...styles.vote_sub_txt}}>{item.terms}</Text>
                 </TouchableOpacity>
               )}
             />
