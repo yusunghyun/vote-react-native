@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import {DataType} from '../../Common/type';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import dayjs from 'dayjs';
@@ -26,7 +33,7 @@ export default function index(props: Props) {
 
   useEffect(() => {
     props.navigation.addListener('focus', async () => {
-      console.log('data : ',data)
+      console.log('data : ', data);
     });
   }, [props.navigation]);
 
@@ -42,12 +49,12 @@ export default function index(props: Props) {
               <TouchableOpacity
                 onPress={() => {
                   let tmp = {...data};
-                  if(tmp.item[index].isCheck){
-                    tmp.item[index].vote = tmp.item[index].vote -1
-                    tmp.item[index].isCheck = false
-                  }else{
-                    tmp.item[index].vote = tmp.item[index].vote +1
-                    tmp.item[index].isCheck = true
+                  if (tmp.item[index].isCheck) {
+                    tmp.item[index].vote = tmp.item[index].vote - 1;
+                    tmp.item[index].isCheck = false;
+                  } else {
+                    tmp.item[index].vote = tmp.item[index].vote + 1;
+                    tmp.item[index].isCheck = true;
                   }
                   set_data(tmp);
                 }}
@@ -89,16 +96,29 @@ export default function index(props: Props) {
         <TouchableOpacity
           onPress={async () => {
             console.log('data : ', data);
-            const legacy = (await AsyncStorage.getItem('data'))
-            if(legacy) await AsyncStorage.setItem('data',JSON.stringify(JSON.parse(legacy).map((v,i)=>{
-              if(v.key===data.key){
-                return {...v,item:data.item}
-              }else{
-                return v
-              }
-            })))
-            props.navigation.goBack();
-
+            if (data.item.some((v) => v.isCheck)) {
+              const legacy = await AsyncStorage.getItem('data');
+              if (legacy)
+                await AsyncStorage.setItem(
+                  'data',
+                  JSON.stringify(
+                    JSON.parse(legacy).map((v, i) => {
+                      if (v.key === data.key) {
+                        return {...v, item: data.item};
+                      } else {
+                        return v;
+                      }
+                    }),
+                  ),
+                );
+              props.navigation.goBack();
+            } else {
+              ToastAndroid.showWithGravity(
+                '투표할 항목을 눌러주세요!',
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+              );
+            }
           }}
           style={{...styles.create_container2}}>
           <Text style={{...styles.create_txt2}}>투표 하기!</Text>
