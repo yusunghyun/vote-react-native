@@ -47,10 +47,6 @@ export default function index(props: Props) {
   const [time, set_time] = useState<Date | number>();
   const [time_modal, set_time_modal] = useState<boolean>(false);
 
-  useEffect(() => {
-    console.log('fd : ', form.item);
-  }, [form]);
-
   return (
     <>
       <View style={{...styles.container}}>
@@ -69,7 +65,7 @@ export default function index(props: Props) {
               <TextInput
                 key={i + 'ci'}
                 style={{...styles.input}}
-                placeholder={`${i+1}번째 항목`}
+                placeholder={`${i + 1}번째 항목`}
                 value={form.item[i].name} //아 벨류가 필수네 걍 뻇더니 한글자에서 끝남 ㅇㅅㅇ
                 onChangeText={(text) => {
                   let tmp = {...form};
@@ -109,7 +105,7 @@ export default function index(props: Props) {
                   set_time_modal(true);
                 }}
                 style={{...styles.input}}>
-                <Text>{dayjs(time).format('HH:mm')}</Text>
+                <Text>{dayjs(time).format('hh:mm a')}</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -119,12 +115,12 @@ export default function index(props: Props) {
             onPress={() => {
               props.navigation.goBack();
             }}
-            style={{...styles.create_container2}}>
-            <Text style={{...styles.create_txt2}}>취소</Text>
+            style={{...styles.create_container}}>
+            <Text style={{...styles.create_txt}}>취소</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={async () => {
-              await AsyncStorage.clear();
+              // await AsyncStorage.clear();
               const tmp = await AsyncStorage.getItem('data');
               if (tmp) {
                 await AsyncStorage.setItem(
@@ -164,8 +160,8 @@ export default function index(props: Props) {
               }
               props.navigation.goBack();
             }}
-            style={{...styles.create_container}}>
-            <Text style={{...styles.create_txt}}>완료</Text>
+            style={{...styles.create_container2}}>
+            <Text style={{...styles.create_txt2}}>완료</Text>
           </TouchableOpacity>
         </View>
       </View>
