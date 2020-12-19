@@ -38,8 +38,25 @@ export default function index(props: Props) {
   }, [props.navigation]);
 
   return (
-    <View style={{...styles.container2}}>
+    <View style={{...styles.container}}>
       <Text style={{...styles.title}}>{data.title}</Text>
+      {data.host === params.name ? (
+        <TouchableOpacity
+          onPress={async () => {
+            const legacy = await AsyncStorage.getItem('data');
+            if (legacy)
+              await AsyncStorage.setItem(
+                'data',
+                JSON.stringify(
+                  JSON.parse(legacy).filter((v, i) => v.key !== data.key),
+                ),
+              );
+            props.navigation.goBack();
+          }}
+          style={{...styles.delete_touch}}>
+          <Text style={{...styles.delete_text}}>삭제하기</Text>
+        </TouchableOpacity>
+      ) : null}
       <FlatList
         data={data?.item}
         keyExtractor={(item, index) => index + 'd'}
@@ -59,7 +76,9 @@ export default function index(props: Props) {
                   set_data(tmp);
                 }}
                 style={
-                  item.isCheck ? {...styles.input_check} : {...styles.input}
+                  item.isCheck
+                    ? {...styles.input_check, marginHorizontal: scale(20)}
+                    : {...styles.input, marginHorizontal: scale(20)}
                 }>
                 <Text
                   style={
@@ -71,15 +90,19 @@ export default function index(props: Props) {
                 </Text>
               </TouchableOpacity>
               {index === data?.item.length - 1 ? (
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{...styles.term_text}}>마감 기간</Text>
-                  <View style={{...styles.input, marginRight: scale(5)}}>
-                    <Text>{dayjs(data?.terms).format('YYYY-MM-DD')}</Text>
+                <>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{...styles.term_text, marginLeft: scale(20)}}>
+                      마감 기간
+                    </Text>
+                    <View style={{...styles.input, marginRight: scale(5)}}>
+                      <Text>{dayjs(data?.terms).format('YYYY-MM-DD')}</Text>
+                    </View>
+                    <View style={{...styles.input, marginRight: scale(20)}}>
+                      <Text>{dayjs(data?.terms).format('hh:mm a')}</Text>
+                    </View>
                   </View>
-                  <View style={{...styles.input}}>
-                    <Text>{dayjs(data?.terms).format('hh:mm a')}</Text>
-                  </View>
-                </View>
+                </>
               ) : null}
             </>
           );

@@ -22,20 +22,40 @@ const styles = StyleSheet.create({
     margin: scale(20),
     color: '#AE5E1A',
   },
-  plust_text:{
-    fontSize:scale(14), 
-    color:'rgba(0,0,0,0.4)',
-    marginVertical:scale(10), 
+  plust_text: {
+    fontSize: scale(14),
+    color: 'rgba(0,0,0,0.4)',
+    marginVertical: scale(10),
   },
-  plust_text_check:{
-    fontSize:scale(14), 
-    color:'#FFC091',
-    marginVertical:scale(10), 
+  plust_text_check: {
+    fontSize: scale(14),
+    color: '#FFC091',
+    marginVertical: scale(10),
   },
-  term_text:{
-    flex:1,
-    fontSize:scale(14), 
-    color:'#AE5E1A'
+  term_text: {
+    flex: 1,
+    fontSize: scale(14),
+    color: '#AE5E1A',
+  },
+  delete_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  delete_touch: {
+    position: 'absolute',
+    top: scale(20),
+    right: scale(20),
+    backgroundColor: 'red',
+    elevation: 5,
+    borderRadius: scale(12),
+    padding: scale(5),
+    alignSelf: 'center',
+    marginBottom: scale(10),
+  },
+  delete_text: {
+    fontSize: scale(14),
+    color: '#ffffff',
   },
   input: {
     borderWidth: 1,
@@ -100,11 +120,13 @@ const styles = StyleSheet.create({
     color: '#AE5E1A',
   },
   create_container: {
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: scale(14),
     marginHorizontal: scale(10),
+    marginLeft: scale(20),
+
     marginTop: scale(20),
     marginBottom: scale(30),
     borderRadius: scale(12),
@@ -112,11 +134,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   create_container2: {
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: scale(14),
     marginHorizontal: scale(10),
+    marginRight: scale(20),
     marginTop: scale(20),
     marginBottom: scale(30),
     borderRadius: scale(12),
