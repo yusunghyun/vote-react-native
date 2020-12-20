@@ -27,14 +27,14 @@ export default function index(props: Props) {
   const [data, set_data] = useState<DataType>({
     ...params.data,
   });
-  const [vote_volume,set_vote_volume] = useState<number>(0) 
+  const [vote_volume, set_vote_volume] = useState<number>(0);
   useEffect(() => {
     props.navigation.addListener('focus', async () => {
       let tmp_cnt = 0;
-      params.data.item.forEach((v=>{
-        tmp_cnt += v.vote
-      }))
-      set_vote_volume(tmp_cnt)
+      params.data.item.forEach((v) => {
+        tmp_cnt += v.vote;
+      });
+      set_vote_volume(tmp_cnt);
     });
   }, [props.navigation]);
 
@@ -49,17 +49,41 @@ export default function index(props: Props) {
           return (
             <>
               <View
-                style={{...styles.input_check,flexDirection:'row',justifyContent:'space-between', marginHorizontal: scale(20)}}>
+                style={{
+                  ...styles.input_check,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginHorizontal: scale(20),
+                }}>
                 <Text style={{...styles.plust_text_check}}>{item.name}</Text>
-                <Text style={{...styles.plust_text_check}}>{item.vote}표 {item.vote ? Math.round(item.vote*100/vote_volume) : 0}%</Text>
+                <Text style={{...styles.plust_text_check}}>
+                  {item.vote}표{' '}
+                  {item.vote ? Math.round((item.vote * 100) / vote_volume) : 0}%
+                </Text>
               </View>
               {index === data?.item.length - 1 ? (
                 <>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={{...styles.term_text, marginLeft: scale(20)}}>
-                      마감된 투표입니다.
-                    </Text>
-                  </View>
+                  {data.terms > dayjs(Date.now()).unix() * 1000 ? (
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{...styles.term_text, marginLeft: scale(20)}}>
+                        마감 기간
+                      </Text>
+                      <View style={{...styles.input, marginRight: scale(5)}}>
+                        <Text>{dayjs(data?.terms).format('YYYY-MM-DD')}</Text>
+                      </View>
+                      <View style={{...styles.input, marginRight: scale(20)}}>
+                        <Text>{dayjs(data?.terms).format('hh:mm a')}</Text>
+                      </View>
+                    </View>
+                  ) : (
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{...styles.term_text, marginLeft: scale(20)}}>
+                        마감된 투표입니다.
+                      </Text>
+                    </View>
+                  )}
                 </>
               ) : null}
             </>
