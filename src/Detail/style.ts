@@ -37,6 +37,12 @@ const styles = StyleSheet.create({
     fontSize: scale(14),
     color: '#AE5E1A',
   },
+  result_text:{
+    fontSize:scale(12),
+    color:'rgba(0,0,0,0.5)' ,
+    textDecorationLine:'underline',
+    marginLeft:scale(20), 
+  },
   delete_container: {
     flexDirection: 'row',
     alignItems: 'center',

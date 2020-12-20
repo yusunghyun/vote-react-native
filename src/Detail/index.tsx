@@ -102,6 +102,16 @@ export default function index(props: Props) {
                       <Text>{dayjs(data?.terms).format('hh:mm a')}</Text>
                     </View>
                   </View>
+                  <Text
+                    onPress={() => {
+                      props.navigation.navigate('Result', {
+                        data,
+                        name: params.name,
+                      });
+                    }}
+                    style={{...styles.result_text}}>
+                    결과보기!!
+                  </Text>
                 </>
               ) : null}
             </>
@@ -134,6 +144,11 @@ export default function index(props: Props) {
                     }),
                   ),
                 );
+              ToastAndroid.showWithGravity(
+                '투표 완료!',
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+              );
               props.navigation.goBack();
             } else {
               ToastAndroid.showWithGravity(
