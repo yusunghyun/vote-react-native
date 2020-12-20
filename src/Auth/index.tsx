@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props {
   navigation: StackNavigationProp<{}>;
@@ -16,6 +17,47 @@ interface Props {
 
 export default function index(props: Props) {
   const [name, set_name] = useState<string>('');
+
+  const AsyncStorage_setting = async () => {
+    const legacy = await AsyncStorage.getItem('data');
+    if (legacy) {
+    } else {
+      await AsyncStorage.setItem(
+        'data',
+        JSON.stringify([
+          {
+            title: '치킨을 골라주세요 !',
+            item: [
+              {name: '뿌링클', vote: 11, isCheck: true},
+              {name: '스노우', vote: 4, isCheck: false},
+              {name: '치즐링', vote: 4, isCheck: false},
+              {name: '바사삭', vote: 7, isCheck: false},
+            ],
+            key: '0',
+            host: '유성현',
+            terms: 1608460200000,
+          },
+          {
+            title: '최고의 언어는?',
+            item: [
+              {name: '파이썬', vote: 6, isCheck: false},
+              {name: 'C언어', vote: 2, isCheck: false},
+              {name: '자바스크립트', vote: 7, isCheck: true},
+              {name: 'JAVA', vote: 4, isCheck: false},
+              {name: 'DART', vote: 2, isCheck: false},
+            ],
+            key: '175',
+            host: '유성현',
+            terms: 1609426740000,
+          },
+        ]),
+      );
+    }
+  };
+
+  useEffect(() => {
+    AsyncStorage_setting();
+  }, []);
 
   return (
     <View style={{...styles.container}}>

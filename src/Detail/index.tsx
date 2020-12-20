@@ -31,12 +31,6 @@ export default function index(props: Props) {
     }),
   });
 
-  useEffect(() => {
-    props.navigation.addListener('focus', async () => {
-      console.log('data : ', data);
-    });
-  }, [props.navigation]);
-
   return (
     <View style={{...styles.container}}>
       <Text style={{...styles.title}}>{data.title}</Text>
@@ -128,7 +122,6 @@ export default function index(props: Props) {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={async () => {
-            console.log('data : ', data);
             if (data.item.some((v) => v.isCheck)) {
               const legacy = await AsyncStorage.getItem('data');
               if (legacy)
