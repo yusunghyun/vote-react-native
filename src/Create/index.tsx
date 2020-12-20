@@ -45,7 +45,7 @@ export default function index(props: Props) {
 
   const [date, set_date] = useState<Date | number>(Date.now());
   const [date_modal, set_date_modal] = useState<boolean>(false);
-  const [time, set_time] = useState<Date | number>(Date.now());
+  const [time, set_time] = useState<Date | number>(Date.now()+3600000);
   const [time_modal, set_time_modal] = useState<boolean>(false);
 
   return (
@@ -123,7 +123,7 @@ export default function index(props: Props) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={async () => {
-              if (form.title && form.item.some((v) => v.name)) {
+              if (form.title && form.item.every((v) => v.name)) {
                 // await AsyncStorage.clear()
                 const tmp = await AsyncStorage.getItem('data');
                 if (tmp) {
