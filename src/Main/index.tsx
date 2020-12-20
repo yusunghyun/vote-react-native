@@ -39,22 +39,35 @@ export default function index(props: Props) {
                   <TouchableOpacity
                     onPress={() => {
                       if (item.terms > now_time) {
-                        props.navigation.navigate('Detail', {data:item,name:props.route.params.name});
+                        props.navigation.navigate('Detail', {
+                          data: item,
+                          name: props.route.params.name,
+                        });
                       } else {
-                        props.navigation.navigate('Result', {data:item,name:props.route.params.name});
+                        props.navigation.navigate('Result', {
+                          data: item,
+                          name: props.route.params.name,
+                        });
                       }
                     }}
                     style={{...styles.vote_container}}>
                     <View style={{...styles.vote_row}}>
                       <Text style={{...styles.vote_txt}}>{item.title}</Text>
                       {item.terms > now_time ? (
-                        <Text style={{...styles.vote_txt}}>진행중</Text>
+                        <Text style={{...styles.vote_txt}}>진행중인 투표</Text>
                       ) : (
-                        <Text style={{...styles.vote_txt}}>종료</Text>
+                        <Text style={{...styles.vote_txt}}>종료된 투표</Text>
                       )}
                     </View>
-                    <Text style={{...styles.vote_sub_txt}}>{item.host}</Text>
-                    <Text style={{...styles.vote_sub_txt}}>{item.terms}</Text>
+                    <Text style={{...styles.vote_sub_txt}}>
+                      작성자 : {item.host}
+                    </Text>
+                    {item.terms > now_time ? (
+                      <Text style={{...styles.vote_sub_txt}}>
+                        마감 기간 :{' '}
+                        {dayjs(item.terms).format('YYYY-MM-DD hh:mm a')}
+                      </Text>
+                    ) : null}
                   </TouchableOpacity>
                 );
               }}
