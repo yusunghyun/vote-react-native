@@ -124,6 +124,7 @@ export default function index(props: Props) {
           <TouchableOpacity
             onPress={async () => {
               if (form.title && form.item.some((v) => v.name)) {
+                // await AsyncStorage.clear()
                 const tmp = await AsyncStorage.getItem('data');
                 if (tmp) {
                   await AsyncStorage.setItem(
